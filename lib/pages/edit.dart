@@ -29,8 +29,17 @@ class _EditState extends State<Edit> {
   TextEditingController desertController = TextEditingController();
 
   Future<void> _postMenu() async { // Obter info da base de dados
-    dynamic img = _menu.img, soup = _menu.soup, meat = _menu.meat, fish = _menu.fish,
+    dynamic img = null, soup = _menu.soup, meat = _menu.meat, fish = _menu.fish,
         vegetarian = _menu.vegetarian, desert = _menu.desert;
+
+    if(_menuUpdated.weekDay != WeekDay.NOTHING){
+      img = null;
+      soup = _menuUpdated.soup;
+      meat = _menuUpdated.meat;
+      fish = _menuUpdated.fish;
+      vegetarian = _menuUpdated.vegetarian;
+      desert = _menuUpdated.desert;
+    }
 
     if(soupController.text != '' && soupController.text != ' '){
       soup = soupController.text;
