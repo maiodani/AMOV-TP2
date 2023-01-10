@@ -68,14 +68,14 @@ class _MyHomePageState extends State<MyHomePage> {
       for(int i = 0; i < aux.length; i++){
         if(first){
           cont++;
-          if(cont >= 5){
-            fill.add(aux[cont-5]);
+          if(cont >= aux.length){
+            fill.add(aux[cont-aux.length]);
           }else{
             fill.add(aux[cont]);
           }
 
         }else{
-          if(date.weekday == i+1){
+          if(WeekDay.getWeekbyIndex(date.weekday - 1) == aux[i].weekDay){
             cont = i;
             i = 0;
             fill.add(aux[cont]);
@@ -100,13 +100,16 @@ class _MyHomePageState extends State<MyHomePage> {
         setState((){
           _menus.clear();
           _menusUpdate.clear();
+
           WeekDay.values.forEach((element) {
             if(element != WeekDay.NOTHING) {
               aux.add(Menu.fromJson(decodeData[element.name.toString()]['original']));
             }
           });
+
           reorderMeals(aux, _menus);
           aux.clear();
+
           WeekDay.values.forEach((element) {
             if(element != WeekDay.NOTHING) {
               if (decodeData[element.name.toString()]['update'] != null) {
@@ -115,7 +118,8 @@ class _MyHomePageState extends State<MyHomePage> {
               }
             }
           });
-          reorderMeals(aux, _menusUpdate);
+
+          _menusUpdate.addAll(aux);//NOVO
           _menus[0].img = 'bife.jpg';
         });
 
